@@ -85,7 +85,7 @@ if os.path.exists(DATASET_FILE):
     print(f"   Total training samples: {n_lines}")
 else:
     # Try Drive location
-    alt_path = os.path.join(DRIVE_BASE, "milk_supply_chain_qwen.jsonl")
+    alt_path = os.path.join(DRIVE_MASTER_PATH, "milk_supply_chain_qwen.jsonl")
     if os.path.exists(alt_path):
         DATASET_FILE = alt_path
         print(f"✅ Dataset found on Drive: {DATASET_FILE}")
@@ -93,10 +93,14 @@ else:
         print("❌ Dataset not found! Upload 'milk_supply_chain_qwen.jsonl' to Colab or Drive.")
         print(f"   Checked: {DATASET_FILE}")
         print(f"   Checked: {alt_path}")
+        raise FileNotFoundError(
+            "Dataset file not found at either /content or DRIVE_MASTER_PATH. "
+            "Upload milk_supply_chain_qwen.jsonl before continuing."
+        )
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 3: LOAD MODEL & TOKENIZER (4-bit Quantization)           ║
+# ║  CELL 3: LOAD MODEL & TOKENIZER (4-bit Quantization)             ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -130,7 +134,7 @@ print(f"   Tokenizer vocab: {tokenizer.vocab_size}")
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 4: APPLY LoRA ADAPTERS                                   ║
+# ║  CELL 4: APPLY LoRA ADAPTERS                                     ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -174,7 +178,7 @@ print(f"{'='*60}")
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 5: PREPARE DATASET (ChatML Format)                       ║
+# ║  CELL 5: PREPARE DATASET (ChatML Format)                         ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -240,7 +244,7 @@ print(f"{'─'*60}")
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 6: TRAINING CONFIGURATION & LAUNCH                       ║
+# ║  CELL 6: TRAINING CONFIGURATION & LAUNCH                         ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -323,7 +327,7 @@ print(f"  Seq Length         : {MAX_SEQ_LENGTH}")
 print(f"{'='*60}")
 
 # ╔════════════════════════════════════════════════════════════════╗
-# ║  START TRAINING                                               ║
+# ║  START TRAINING                                                ║
 # ╚════════════════════════════════════════════════════════════════╝
 
 print("\n🚀 Starting fine-tuning...")
@@ -358,7 +362,7 @@ print(f"{'='*60}")
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 7: INFERENCE TESTING                                     ║
+# ║  CELL 7: INFERENCE TESTING                                       ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -500,7 +504,7 @@ print("="*70)
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 8: SAVE LORA ADAPTERS & FULL 16-BIT MODEL                ║
+# ║  CELL 8: SAVE LORA ADAPTERS & FULL 16-BIT MODEL                  ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -539,7 +543,7 @@ else:
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 9: EXPORT GGUF (FP16 AND QUANTIZED Q4_K_M)               ║
+# ║  CELL 9: EXPORT GGUF (FP16 AND QUANTIZED Q4_K_M)                 ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -575,7 +579,7 @@ if os.path.exists("/content/drive/MyDrive"):
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 10: PUSH TO HUGGING FACE HUB                             ║
+# ║  CELL 10: PUSH TO HUGGING FACE HUB                               ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
@@ -618,36 +622,35 @@ else:
 
 
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║  CELL 11: FINAL SUMMARY & NEXT STEPS                           ║
+# ║  CELL 11: FINAL SUMMARY & NEXT STEPS                             ║
 # ╚══════════════════════════════════════════════════════════════════╝
 # %%
 
 print("""
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    🎉 FINE-TUNING COMPLETE — SUMMARY                       ║
+║                     🎉 FINE-TUNING COMPLETE — SUMMARY                        ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                            ║
-║  MODEL DETAILS                                                             ║
-║  ─────────────────────────────────────────────────────────────────────────  ║
-║  • Base Model    : Qwen/Qwen2.5-0.5B-Instruct                             ║
-║  • Fine-Tuning   : LoRA (r=16, α=16) on all attention + MLP layers         ║
-║  • Quantization  : QLoRA 4-bit (training) → q4_k_m GGUF (deployment)      ║
-║  • Domain        : Perishable Dairy Supply Chain (Milk)                     ║
-║  • Clients       : Amul (Gujarat), Mother Dairy (Delhi), Sudha (Bihar)     ║
-║                                                                            ║
-║  SAVED ARTIFACTS                                                           ║
-║  ─────────────────────────────────────────────────────────────────────────  ║
-║  • LoRA Adapters : ./qwen_supply_chain_lora (+ Google Drive backup)        ║
-║  • GGUF Model    : ./qwen_supply_chain_gguf (+ Google Drive backup)        ║
-║  • HF Hub        : Pushed to your Hugging Face repository                  ║
-║                                                                            ║
-║  NEXT STEPS                                                                ║
-║  ─────────────────────────────────────────────────────────────────────────  ║
-║  1. Integrate LoRA adapters into your Streamlit app (app.py)               ║
-║  2. Use GGUF with Ollama:  ollama create supply_chain -f Modelfile         ║
-║  3. Test with real-time supply chain data from your FL system              ║
-║  4. Monitor model drift and retrain periodically with new data             ║
-║                                                                            ║
+║                                                                              ║
+║  ─────────────────────────────────────────────────────────────────────────   ║
+║  • Base Model    : Qwen/Qwen2.5-0.5B-Instruct                                ║
+║  • Fine-Tuning   : LoRA (r=16, α=16) on all attention + MLP layers           ║
+║  • Quantization  : QLoRA 4-bit (training) → q4_k_m GGUF (deployment)         ║  
+║  • Domain        : Perishable Dairy Supply Chain (Milk)                      ║
+║  • Clients       : Amul (Gujarat), Mother Dairy (Delhi), Sudha (Bihar)       ║
+║                                                                              ║
+║  SAVED ARTIFACTS                                                             ║
+║  ─────────────────────────────────────────────────────────────────────────   ║
+║  • LoRA Adapters : ./qwen_supply_chain_lora (+ Google Drive backup)          ║
+║  • GGUF Model    : ./qwen_supply_chain_gguf (+ Google Drive backup)          ║
+║  • HF Hub        : Pushed to your Hugging Face repository                    ║
+║                                                                              ║
+║  NEXT STEPS                                                                  ║
+║  ─────────────────────────────────────────────────────────────────────────   ║
+║  1. Integrate LoRA adapters into your Streamlit app (app.py)                 ║
+║  2. Use GGUF with Ollama:  ollama create supply_chain -f Modelfile           ║
+║  3. Test with real-time supply chain data from your FL system                ║
+║  4. Monitor model drift and retrain periodically with new data               ║
+║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """)
 

@@ -13,3 +13,4 @@ qwen_supply_chain_*/
 *.safetensors
 *.gguf
 *.bin
+.github/
