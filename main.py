@@ -556,7 +556,7 @@ def main():
             "product": SCConfig.PRODUCT_NAME,
         }
 
-    with open(os.path.join(SCConfig.LOG_DIR, "decision_log.json"), "a", encoding="utf-8") as f:
+    with open(os.path.join(SCConfig.LOG_DIR, "decision_log.jsonl"), "a", encoding="utf-8") as f:
         f.write(json.dumps(to_serializable(log_entry)) + "\n")
 
     log("Decision saved.")
