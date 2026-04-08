@@ -543,12 +543,21 @@ def main():
 
     if user.isdigit():
         new_qty = int(user)
-        log_entry = {"event": "override", "new": new_qty}
+        log_entry = {
+            "event": "override",
+            "new": new_qty,
+            "original": opt["optimized_qty"],
+            "product": SCConfig.PRODUCT_NAME,
+        }
     else:
-        log_entry = {"event": "approved", "qty": opt['optimized_qty']}
+        log_entry = {
+            "event": "approved",
+            "qty": opt["optimized_qty"],
+            "product": SCConfig.PRODUCT_NAME,
+        }
 
-    with open(os.path.join(SCConfig.LOG_DIR, "decision_log.json"), "w") as f:
-        json.dump(to_serializable(log_entry), f, indent=2)
+    with open(os.path.join(SCConfig.LOG_DIR, "decision_log.jsonl"), "a", encoding="utf-8") as f:
+        f.write(json.dumps(to_serializable(log_entry)) + "\n")
 
     log("Decision saved.")
 

@@ -511,10 +511,10 @@ with main_col:
                 f_left, f_right = st.columns([2, 3])
                 
                 with f_left:
-                    st.metric("Revenue", f"${fin['revenue']:.2f}")
-                    st.metric("Order Cost", f"${fin['order_cost']:.2f}")
-                    st.metric("Waste Cost", f"${fin['waste_cost']:.2f}")
-                    st.metric("Net Profit", f"${fin['net_profit']:.2f}")
+                    st.metric("Revenue", f"INR {fin['revenue']:.2f}")
+                    st.metric("Order Cost", f"INR {fin['order_cost']:.2f}")
+                    st.metric("Waste Cost", f"INR {fin['waste_cost']:.2f}")
+                    st.metric("Net Profit", f"INR {fin['net_profit']:.2f}")
                 
                 with f_right:
                     st.pyplot(plot_financial_pie(fin), use_container_width=True)
