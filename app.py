@@ -36,93 +36,81 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* ── Google Font ── */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    /* ── Global Dark Theme ── */
+    /* ── Global Theme ── */
     html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     .stApp {
-        background: linear-gradient(135deg, #0f0c29 0%, #141e30 50%, #0d1117 100%);
-        color: #e2e8f0;
+        background-color: #0f172a;
+        color: #f8fafc;
     }
 
     /* ── Sidebar ── */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #161b22 0%, #0d1117 100%) !important;
-        border-right: 1px solid rgba(99, 102, 241, 0.15);
+        background-color: #1e293b !important;
+        border-right: 1px solid #334155;
     }
     section[data-testid="stSidebar"] .stMarkdown, 
     section[data-testid="stSidebar"] label,
     section[data-testid="stSidebar"] .stSlider label,
     section[data-testid="stSidebar"] span {
-        color: #c9d1d9 !important;
+        color: #cbd5e1 !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3 {
-        color: #a78bfa !important;
+        color: #f8fafc !important;
     }
 
     /* ── Headers ── */
-    h1 { color: #e2e8f0 !important; font-weight: 800 !important; letter-spacing: -0.5px; }
-    h2, h3 { color: #c9d1d9 !important; font-weight: 700 !important; }
-    .stMarkdown p, .stMarkdown li, .stCaption, label, span { color: #a8b2c1 !important; }
+    h1 { color: #f8fafc !important; font-weight: 700 !important; letter-spacing: -0.02em; }
+    h2, h3 { color: #f1f5f9 !important; font-weight: 600 !important; }
+    .stMarkdown p, .stMarkdown li, .stCaption, label, span { color: #94a3b8 !important; }
 
-    /* ── Animated Gradient Border Top ── */
-    .stApp::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1, #a78bfa, #06b6d4, #10b981, #6366f1);
-        background-size: 300% 100%;
-        animation: gradient-slide 4s linear infinite;
-        z-index: 999;
-    }
-    @keyframes gradient-slide {
-        0% { background-position: 0% 50%; }
-        100% { background-position: 300% 50%; }
-    }
-
-    /* ── Glassmorphism Cards ── */
+    /* ── Metrics Cards ── */
     div[data-testid="stMetric"] {
-        background: rgba(255,255,255,0.04);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: 12px;
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 8px;
         padding: 16px 20px;
-        transition: all 0.3s ease;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     }
-    div[data-testid="stMetric"]:hover {
-        border-color: rgba(99, 102, 241, 0.5);
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
-        transform: translateY(-2px);
+    div[data-testid="stMetric"] label { 
+        color: #94a3b8 !important; 
+        font-size: 13px !important; 
+        font-weight: 500 !important; 
     }
-    div[data-testid="stMetric"] label { color: #8b95a5 !important; font-size: 13px !important; }
-    div[data-testid="stMetric"] [data-testid="stMetricValue"] { color: #f1f5f9 !important; font-weight: 700 !important; }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] { 
+        color: #f8fafc !important; 
+        font-weight: 600 !important; 
+        font-size: 28px !important; 
+    }
 
     /* ── Buttons ── */
     .stButton > button {
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        padding: 10px 24px !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+        border: 1px solid #334155 !important;
+        border-radius: 6px !important;
+        font-weight: 500 !important;
+        padding: 8px 16px !important;
+        transition: background-color 0.1s ease, border-color 0.1s ease !important;
     }
     .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5) !important;
+        background-color: #334155 !important;
+        border-color: #475569 !important;
+        color: #f8fafc !important;
     }
-    .stFormSubmitButton > button {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    .stFormSubmitButton > button, div[data-testid="stBaseButton-primary"] > button {
+        background-color: #2563eb !important;
+        color: white !important;
+        border: 1px solid #1d4ed8 !important;
     }
-    .stFormSubmitButton > button:hover {
-        box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5) !important;
+    .stFormSubmitButton > button:hover, div[data-testid="stBaseButton-primary"] > button:hover {
+        background-color: #1d4ed8 !important;
+        color: white !important;
     }
 
     /* ── Inputs ── */
@@ -130,86 +118,98 @@ st.markdown("""
     .stNumberInput > div > div > input,
     .stSelectbox > div > div,
     .stTextArea > div > div > textarea {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #e2e8f0 !important;
-        border: 1px solid rgba(99, 102, 241, 0.2) !important;
-        border-radius: 8px !important;
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border: 1px solid #334155 !important;
+        border-radius: 6px !important;
+    }
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 1px #2563eb !important;
     }
     
     /* ── Expanders / Forms ── */
     .stForm {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(99, 102, 241, 0.15);
-        border-radius: 12px;
-        padding: 10px;
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 20px;
     }
     
     /* ── Info / Warning / Error Boxes ── */
     .stAlert {
-        border-radius: 10px !important;
+        border-radius: 8px !important;
+        border: 1px solid #334155 !important;
+        background-color: #1e293b !important;
     }
     div[data-testid="stNotification"] {
-        border-radius: 10px;
+        border-radius: 8px;
+        background-color: #1e293b;
+        border: 1px solid #334155;
     }
 
     /* ── Chat Messages ── */
     .stChatMessage {
-        background: rgba(255,255,255,0.03) !important;
-        border: 1px solid rgba(99, 102, 241, 0.1) !important;
-        border-radius: 12px !important;
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        padding: 1rem !important;
     }
 
     /* ── Dividers ── */
-    hr { border-color: rgba(99, 102, 241, 0.15) !important; }
+    hr { border-color: #334155 !important; margin: 1.5rem 0 !important; }
 
     /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1117; }
-    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 10px; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
     /* ── Custom Hero Banner ── */
     .hero-banner {
-        background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(6,182,212,0.1) 100%);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: 14px;
-        padding: 18px 28px;
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 20px 24px;
         margin-bottom: 24px;
     }
-    .hero-banner h4 { margin: 0; color: #a78bfa !important; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
-    .hero-banner .stats { display: flex; gap: 30px; margin-top: 8px; }
-    .hero-banner .stat-item { color: #8b95a5; font-size: 13px; }
-    .hero-banner .stat-item strong { color: #06b6d4; }
-
-    /* ── Pulse Dot ── */
-    .pulse-dot {
-        display: inline-block;
-        width: 8px; height: 8px;
-        border-radius: 50%;
-        background: #10b981;
-        animation: pulse 1.5s ease infinite;
-        margin-right: 6px;
+    .hero-banner h4 { 
+        margin: 0; 
+        color: #f8fafc;
+        font-size: 16px; 
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
-    @keyframes pulse {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
-        50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
-    }
+    .hero-banner .stats { display: flex; gap: 32px; margin-top: 12px; flex-wrap: wrap; }
+    .hero-banner .stat-item { color: #94a3b8; font-size: 14px; }
+    .hero-banner .stat-item strong { color: #f8fafc; font-weight: 500; }
 
     /* ── Progress Bar ── */
-    .stProgress > div > div > div { background-color: #6366f1 !important; }
+    .stProgress > div > div > div { background-color: #2563eb !important; border-radius: 4px; }
     
     /* ── Tabs ── */
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
+    .stTabs [data-baseweb="tab-list"] { 
+        gap: 8px; 
+        border-bottom: 1px solid #334155;
+    }
     .stTabs [data-baseweb="tab"] {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(99,102,241,0.15);
-        border-radius: 8px;
-        color: #8b95a5 !important;
-        font-weight: 600;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #94a3b8 !important;
+        font-weight: 500;
+        padding: 8px 16px;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #f8fafc !important;
     }
     .stTabs [aria-selected="true"] {
-        background: rgba(99,102,241,0.15) !important;
-        border-color: #6366f1 !important;
-        color: #a78bfa !important;
+        background: transparent !important;
+        border-bottom-color: #2563eb !important;
+        color: #2563eb !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -217,14 +217,14 @@ st.markdown("""
 
 
 matplotlib.rcParams.update({
-    'figure.facecolor': '#0d111700',
-    'axes.facecolor': '#161b2200',
-    'axes.edgecolor': '#30363d',
-    'axes.labelcolor': '#8b95a5',
-    'text.color': '#c9d1d9',
-    'xtick.color': '#8b95a5',
-    'ytick.color': '#8b95a5',
-    'grid.color': '#21262d',
+    'figure.facecolor': '#0f172a00',
+    'axes.facecolor': '#1e293b00',
+    'axes.edgecolor': '#475569',
+    'axes.labelcolor': '#94a3b8',
+    'text.color': '#f8fafc',
+    'xtick.color': '#94a3b8',
+    'ytick.color': '#94a3b8',
+    'grid.color': '#334155',
     'grid.alpha': 0.5,
 })
 
@@ -245,10 +245,10 @@ def plot_financial_pie(financials):
     wedges, texts, autotexts = ax.pie(
         sizes, explode=explode, labels=labels, colors=colors,
         autopct='%1.1f%%', shadow=False, startangle=90,
-        textprops={'color': '#c9d1d9', 'weight': 'bold', 'size': 10}
+        textprops={'color': '#f8fafc', 'weight': 'bold', 'size': 10}
     )
     for t in texts:
-        t.set_color('#8b95a5')
+        t.set_color('#94a3b8')
     ax.axis('equal')
     return fig
 
@@ -258,22 +258,22 @@ def plot_training_curves(metrics):
     ax1.set_facecolor('none')
     
     rounds = metrics["rounds"]
-    ax1.plot(rounds, metrics["loss"], color='#6366f1', linewidth=2, marker='o', markersize=5, label='Loss')
-    ax1.fill_between(rounds, metrics["loss"], alpha=0.1, color='#6366f1')
+    ax1.plot(rounds, metrics["loss"], color='#3b82f6', linewidth=2, marker='o', markersize=5, label='Loss')
+    ax1.fill_between(rounds, metrics["loss"], alpha=0.1, color='#3b82f6')
     ax1.set_xlabel("Round", fontsize=11)
-    ax1.set_ylabel("Loss (MSE)", color='#6366f1', fontsize=11)
-    ax1.tick_params(axis='y', labelcolor='#6366f1')
+    ax1.set_ylabel("Loss (MSE)", color='#3b82f6', fontsize=11)
+    ax1.tick_params(axis='y', labelcolor='#3b82f6')
     ax1.grid(True, alpha=0.2)
     
     ax2 = ax1.twinx()
-    ax2.plot(rounds, metrics["mae"], color='#06b6d4', linewidth=2, marker='s', markersize=5, label='MAE')
-    ax2.set_ylabel("MAE", color='#06b6d4', fontsize=11)
-    ax2.tick_params(axis='y', labelcolor='#06b6d4')
+    ax2.plot(rounds, metrics["mae"], color='#0ea5e9', linewidth=2, marker='s', markersize=5, label='MAE')
+    ax2.set_ylabel("MAE", color='#0ea5e9', fontsize=11)
+    ax2.tick_params(axis='y', labelcolor='#0ea5e9')
     
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right', 
-               facecolor='#161b22', edgecolor='#30363d', labelcolor='#c9d1d9')
+               facecolor='#1e293b', edgecolor='#475569', labelcolor='#f8fafc')
     
     fig.tight_layout()
     return fig
@@ -286,8 +286,8 @@ def plot_demand_history(history_df, forecast):
     weeks = history_df["week"].values
     demand = history_df["demand"].values
     
-    ax.plot(weeks, demand, color='#a78bfa', linewidth=2, marker='o', markersize=4, label='Actual Demand')
-    ax.fill_between(weeks, demand, alpha=0.08, color='#a78bfa')
+    ax.plot(weeks, demand, color='#818cf8', linewidth=2, marker='o', markersize=4, label='Actual Demand')
+    ax.fill_between(weeks, demand, alpha=0.08, color='#818cf8')
     
     # Forecast point
     next_week = weeks[-1] + 1
@@ -296,7 +296,7 @@ def plot_demand_history(history_df, forecast):
     
     ax.set_xlabel("Week", fontsize=11)
     ax.set_ylabel("Demand (Units)", fontsize=11)
-    ax.legend(facecolor='#161b22', edgecolor='#30363d', labelcolor='#c9d1d9')
+    ax.legend(facecolor='#1e293b', edgecolor='#475569', labelcolor='#f8fafc')
     ax.grid(True, alpha=0.2)
     fig.tight_layout()
     return fig
@@ -310,7 +310,16 @@ with st.sidebar:
     st.markdown("#### ⚙️ Configuration")
     st.info(f"**Product:** {SCConfig.PRODUCT_NAME}")
     
-    num_clients = st.slider("Network Clients", 1, 10, SCConfig.NUM_CLIENTS)
+    st.markdown("""
+    <div style="background:#0f172a; border:1px solid #334155; border-radius:6px; padding:10px 14px; margin-bottom:8px;">
+        <div style="font-size:11px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Network Clients · Locked</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="background:#1e3a5f; color:#93c5fd; font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid #2563eb33;">🏪 Dairy Farm</span>
+            <span style="background:#1e3a5f; color:#93c5fd; font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid #2563eb33;">🏭 Processing Plant</span>
+            <span style="background:#1e3a5f; color:#93c5fd; font-size:11px; padding:2px 8px; border-radius:4px; border:1px solid #2563eb33;">🛒 Supermarket</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     num_rounds = st.slider("FL Rounds", 1, 10, SCConfig.NUM_ROUNDS)
     carbon_cap = st.number_input("Carbon Cap (CO₂e)", value=SCConfig.CARBON_CAP)
     
@@ -330,7 +339,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Update Config
-SCConfig.NUM_CLIENTS = num_clients
+# NUM_CLIENTS is locked to 3 (Dairy Farm · Processing Plant · Supermarket)
 SCConfig.NUM_ROUNDS = num_rounds
 SCConfig.CARBON_CAP = carbon_cap
 SCConfig.LOG_DIR = log_dir
